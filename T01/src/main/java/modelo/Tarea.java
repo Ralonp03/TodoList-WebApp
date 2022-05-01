@@ -52,6 +52,62 @@ public class Tarea {
     @JoinColumn(name="idPrioridad")
     @OneToOne(cascade=CascadeType.PERSIST)
     private Prioridad idPrioridad;
+
+    public int getIdTarea() {
+        return idTarea;
+    }
+
+    public void setIdTarea(int idTarea) {
+        this.idTarea = idTarea;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public Date getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(Date fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public boolean isImportancia() {
+        return importancia;
+    }
+
+    public void setImportancia(boolean importancia) {
+        this.importancia = importancia;
+    }
+
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public Categoria getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Categoria idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public Prioridad getIdPrioridad() {
+        return idPrioridad;
+    }
+
+    public void setIdPrioridad(Prioridad idPrioridad) {
+        this.idPrioridad = idPrioridad;
+    }
     
     
 }
