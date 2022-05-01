@@ -16,31 +16,26 @@ import javax.persistence.Table;
  *
  * @author Ricardo
  */
-
 @Entity
-@Table(name="categorias")
-public class Categoria {
-    //para los tipos no primitivos hay que inicializarlos en el conctacto de la base de datos( ej String)
-    //para los tipos primitivos no hace falta inicializarlos( int, boolean
-    //unicamente para las claves primarias
+@Table(name="prioridades")
+public class Prioridad {
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int idCategoria;
+    private int idPrioridad;
     
-    //para el resto de columnas, renombrar nombreCategoria
     @Column(name="Nombre")
     private String nombre;
     
-    //estadoCategoria
-    @Column(name="Estado")
-    private boolean estado;
+    @Column(name="Color")
+    private String color;
 
-    public int getIdCategoria() {
-        return idCategoria;
+    public int getIdPrioridad() {
+        return idPrioridad;
     }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setIdPrioridad(int idPrioridad) {
+        this.idPrioridad = idPrioridad;
     }
 
     public String getNombre() {
@@ -51,14 +46,13 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public String getColor() {
+        return color;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setColor(String color) {
+        this.color = color;
     }
-    
-    
-    
+     
+     
 }

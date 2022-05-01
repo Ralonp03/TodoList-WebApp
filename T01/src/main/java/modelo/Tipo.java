@@ -9,6 +9,7 @@ package modelo;
  *
  * @author Ricardo
  */
-public class Prioridades {
-    
+public enum Tipo {
+    S,
+    I
 }
