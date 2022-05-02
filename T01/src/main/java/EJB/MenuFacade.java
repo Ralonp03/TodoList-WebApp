@@ -5,10 +5,13 @@
  */
 package EJB;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.Menu;
+import modelo.Usuario;
 
 /**
  *
@@ -27,6 +30,23 @@ public class MenuFacade extends AbstractFacade<Menu> implements MenuFacadeLocal 
 
     public MenuFacade() {
         super(Menu.class);
+    }
+    
+    @Override
+    public List<Menu> obtenerMenusUsuario(Usuario us){
+        
+        int idRol = us.getIdRol().getIdRol();
+        List<Menu> listaMenus = this.findAll();
+        List<Menu> lista = new ArrayList<Menu>();
+        //Arraylist??
+        for(Menu m : listaMenus){
+            
+            if(m.getIdRol().getIdRol() == idRol){
+                lista.add(m);
+            }
+            
+        }
+        return lista;
     }
     
 }

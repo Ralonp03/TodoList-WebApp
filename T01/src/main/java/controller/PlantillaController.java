@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -18,9 +19,10 @@ import modelo.Usuario;
 @Named
 @ViewScoped
 public class PlantillaController implements Serializable {
-
     
+
     public void verificarYmostrar(){
+       
         Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
         try{
@@ -36,4 +38,7 @@ public class PlantillaController implements Serializable {
 
     }
 
+    
+    
+    
 }

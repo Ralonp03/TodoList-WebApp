@@ -7,7 +7,9 @@ package EJB;
 
 import java.util.List;
 import javax.ejb.Local;
+import modelo.Menu;
 import modelo.Rol;
+import modelo.Usuario;
 
 /**
  *
@@ -23,7 +25,7 @@ public interface RolFacadeLocal {
     void remove(Rol rol);
 
     Rol find(Object id);
-
+    
     List<Rol> findAll();
 
     List<Rol> findRange(int[] range);
