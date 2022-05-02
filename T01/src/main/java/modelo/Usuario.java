@@ -31,9 +31,6 @@ public class Usuario {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idUsuario;
     
-    //para el resto de columnas, renombrar nombreCategoria
-    @Column(name="User")
-    private String user;
     
     @Column(name="Correo")
     private String correo;
@@ -65,14 +62,7 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
+   
     public String getCorreo() {
         return correo;
     }
