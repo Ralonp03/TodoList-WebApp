@@ -5,11 +5,10 @@
  */
 package controller;
 
-import EJB.RolFacadeLocal;
 import EJB.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -67,16 +66,15 @@ public class RegistroController implements Serializable{
             //usuario.setUltimaConexion(null);
             if(usuarioEJB.mismoCorreo(usuario.getCorreo())){
                      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ya hay un usuario con este correo.",""));
-  
-            }else{
+              }else{
             usuarioEJB.create(usuario);
             String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario registrado con exito",""));
             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/index.xhtml");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario registrado con exito",""));
             }        
             
         }catch(Exception e){
-        System.out.println("Error en "+ e.getMessage());
+        System.out.println("[RegistroController]"+ e.getMessage());
         
         }
     }
