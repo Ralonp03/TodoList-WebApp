@@ -36,14 +36,6 @@ public class IndexController implements Serializable{
         usuario = new Usuario();
     }
     
-    public void registrar(){
-        String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/publico/prueba.xhtml");
-        } catch (IOException ex) {
-            System.out.println("[IndexController]: "+ex.getMessage());
-        }
-    }
 
     public void verificarUsuario(){
     
@@ -56,7 +48,11 @@ public class IndexController implements Serializable{
     
         String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/publico/prueba.xhtml");
+            if(user.getIdRol().getIdRol() == 1){
+            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/administrador/inicio.xhtml");
+            }else if(user.getIdRol().getIdRol() == 2){
+            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/inicio.xhtml");    
+            }
         } catch (IOException ex) {
             System.out.println("[IndexController]: "+ex.getMessage());
         }
