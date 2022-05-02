@@ -1,12 +1,36 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Login</title>
+        <h:outputStylesheet library="css" name="index.css" />
     </h:head>
     <h:body>
-        Hello from Ricardo
+       
+ <div class="login-wrapper">
+    <h:form class="form">
+      <p:messages id="messages" closable="true"/>
+      <img src="#{resource['img/logoF.jpg']}" alt=""/>
+      <h2>Inicio de sesión</h2>
+      <div class="input-group">
+          <p:inputText value="#{indexController.usuario.user}" id="loginUser"  required="true" requiredMessage="Usuario es obligatorio"/>
+        <label for="loginUser">Nombre de usuario</label>
+        
+      </div>
+      <div class="input-group">
+        <p:password id="loginPassword" value="#{indexController.usuario.password}" required="true" requiredMessage="Contraseña es obligatoria" />
+        <label for="loginPassword">Contraseña</label>
+      </div>
+      <p:commandButton value="Iniciar sesión" update="@form" class="submit-btn" actionListener="#{indexController.verificarUsuario()}"/>
+      <hr class="barra" size="1px" color="#FFD700" />
+      <p class="parteF">¿No tienes cuenta?</p><a href="publico/prueba.xhtml" class="enlace">Regístrate</a>
+    </h:form>
+
+
+  </div>
     </h:body>
 </html>
 
