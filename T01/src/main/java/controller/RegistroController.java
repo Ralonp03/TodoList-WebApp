@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -64,11 +65,15 @@ public class RegistroController implements Serializable{
             usuario.setIdPersona(persona);
             //usuario.setEstado(true);
             //usuario.setUltimaConexion(null);
+            if(usuarioEJB.mismoCorreo(usuario.getCorreo())){
+                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ya hay un usuario con este correo.",""));
+  
+            }else{
             usuarioEJB.create(usuario);
             String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario registrado con exito",""));
             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/index.xhtml");
-            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Aviso","Se registro el usuario"));
-                        
+            }        
             
         }catch(Exception e){
         System.out.println("Error en "+ e.getMessage());

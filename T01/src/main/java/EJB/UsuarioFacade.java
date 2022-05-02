@@ -31,6 +31,18 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
+    @Override
+    public boolean mismoCorreo(String correo){
+        List<Usuario> lista = this.findAll();
+        for(Usuario u : lista){
+            if(correo.equals(u.getCorreo())){
+                return true;
+            }
+        }
+        return false;
+        
+    }
+    
     
     @Override
     public Usuario verificarUsuario(Usuario us){

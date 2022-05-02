@@ -35,11 +35,11 @@
           <label for="uu">Nombre de usuario</label>
       </div>
       <div class="input-group">
-          <p:password id="up1" value="#{registroController.usuario.password}" match="up2" required="true" validatorMessage="Las contraseñas no coinciden" requiredMessage="Contraseña es obligatoria" />
+          <p:password  redisplay="true" id="up1" value="#{registroController.usuario.password}" match="up2" required="true" validatorMessage="Las contraseñas no coinciden" requiredMessage="Contraseña es obligatoria" />
         <label for="up1">Contraseña</label>
       </div>
        <div class="input-group">
-           <p:password id="up2" value="#{registroController.usuario.password}" validatorMessage="La contraseña tiene que ser minimo 8 caracteres de larga">
+           <p:password  redisplay="true" id="up2" value="#{registroController.usuario.password}" validatorMessage="La contraseña tiene que ser minimo 8 caracteres de larga">
                        <f:validateLength minimum="8" maximum="100"/>
            </p:password>
         <label for="up1">Repita la Contraseña</label>

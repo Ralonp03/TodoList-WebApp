@@ -21,7 +21,9 @@ public interface UsuarioFacadeLocal {
     void edit(Usuario usuario);
 
     void remove(Usuario usuario);
-
+    
+    boolean mismoCorreo(String correo);
+    
     Usuario find(Object id);
     
     Usuario verificarUsuario(Usuario us);
