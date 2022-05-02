@@ -7,7 +7,6 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet library="css" name="default.css"/>
         <h:outputStylesheet library="css" name="cssLayout.css"/>
         <title>Plantilla</title>
         <f:event type="preRenderView" listener="#{plantillaController.verificarYmostrar()}"/>
@@ -15,11 +14,26 @@
 
     <h:body>
 
-        <div id="left">
-            <ui:insert name="left">Left</ui:insert>
+        <div class="sidenav" id="left">
+            <ui:insert name="left">
+            
+
+                 <img id="imgSide" src="#{resource['img/logoF.jpg']}" alt=""/>
+  
+                  <a href="#">About</a>
+                  <a href="#">Services</a>
+                  <a href="#">Clients</a>
+                  <a href="#">Contact</a>
+
+
+            </ui:insert>
         </div>
-        <div id="content" class="left_content">
-            <ui:insert name="content">Content</ui:insert>
+        
+        
+        <div id="content"  class="main">
+            <ui:insert name="content">
+                 
+            </ui:insert>
         </div>
 
     </h:body>
