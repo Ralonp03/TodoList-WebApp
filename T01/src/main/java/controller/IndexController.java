@@ -36,9 +36,13 @@ public class IndexController implements Serializable{
         usuario = new Usuario();
     }
     
-    public String registrar(){
-         //return "altausuario.xhtml";
-         return "";
+    public void registrar(){
+        String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/publico/prueba.xhtml");
+        } catch (IOException ex) {
+            System.out.println("[IndexController]: "+ex.getMessage());
+        }
     }
 
     public void verificarUsuario(){
