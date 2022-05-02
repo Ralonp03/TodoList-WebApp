@@ -8,7 +8,22 @@ body {
   background-size: cover;
   font-family: sans-serif;
 }
+#growl{
+right: 20px;
+top: 50%;
 
+}
+.as{
+       left: 50%;
+   right: 0;
+   margin-left:-150px;
+    
+}
+div.ui-growl {
+   left: 50%;
+   right: 0;
+   margin-left:-150px;
+}
 .login-wrapper {
   height: 100vh;
   width: 100vw;

@@ -12,12 +12,12 @@
        
  <div class="login-wrapper">
     <h:form class="form">
-      <p:messages id="messages" closable="true"/>
+      <p:growl id="growl" class="as" life="1500"/>
       <img src="#{resource['img/logoF.jpg']}" alt=""/>
       <h2>Inicio de sesión</h2>
       <div class="input-group">
-          <p:inputText value="#{indexController.usuario.user}" id="loginUser"  required="true" requiredMessage="Usuario es obligatorio"/>
-        <label for="loginUser">Nombre de usuario</label>
+          <p:inputText value="#{indexController.usuario.correo}" id="loginUser"  required="true" requiredMessage="Correo es obligatorio"/>
+        <label for="loginUser">Correo electronico</label>
         
       </div>
       <div class="input-group">
