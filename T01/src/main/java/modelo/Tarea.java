@@ -50,7 +50,7 @@ public class Tarea {
     private Categoria idCategoria;
     
     @JoinColumn(name="idPrioridad")
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @ManyToOne
     private Prioridad idPrioridad;
 
     public int getIdTarea() {
