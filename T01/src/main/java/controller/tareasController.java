@@ -10,7 +10,6 @@ import EJB.PrioridadFacadeLocal;
 import EJB.TareaFacadeLocal;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import static java.time.OffsetTime.now;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,6 +24,7 @@ import modelo.Prioridad;
 import modelo.Tarea;
 import modelo.Usuario;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -63,6 +63,31 @@ prioridad = new Prioridad();
 listaCategorias = categoriaEJB.findAll();
 
  }
+
+    public void onRowEdit(RowEditEvent<Tarea> event) {
+        Tarea tt = event.getObject();
+        tareaEJB.edit(tt);
+        this.listaTareas = tareaEJB.findAll();
+        FacesMessage msg = new FacesMessage("Tarea actualizada","");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        }
+
+        public void onRowCancel(RowEditEvent<Tarea> event) {
+            FacesMessage msg = new FacesMessage("Tarea no actualizada", "");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    public void eliminarTarea(Tarea tat){
+        try{
+            
+           this.tareaEJB.remove(tat);
+           this.listaTareas = tareaEJB.findAll();
+            
+        }catch(Exception e){
+            System.out.println("tareasController: "+e.getMessage());
+        }   
+
+    }
     public void crearTarea(){
         
         try{
@@ -117,9 +142,7 @@ listaCategorias = categoriaEJB.findAll();
         
     }
     
-    public void algo(){
-        System.out.println("hola otro");
-    }
+
     public TareaFacadeLocal getTareaEJB() {
         return tareaEJB;
     }

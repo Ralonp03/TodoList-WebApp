@@ -56,32 +56,42 @@
                             </p:dialog>    
                         </h:form>
                 </div>
-            <div class="card">
-              <h:form id="ff">
-                  <p:selectManyMenu class="hhh" id="advanced" value="#{tareasController.tareas}" 
-                                    onclick="#{tareasController.algo()} " scrollHeight="600" 
-                                      var="c" filter="true" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
-                      <f:selectItems  value="#{tareasController.listaTareas}" var="tarea" itemLabel="#{tarea.contenido} "
-                                      itemValue="#{tarea}" />
+             <div class="card">
+                 <h:form id="form">
+                     <p:growl id="msgs" life="1500"/>
 
+                     <p:dataTable id="basicDT" var="t" value="#{tareasController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" >
+                         <p:ajax event="rowEdit" listener="#{tareasController.onRowEdit}" update=":form:msgs"/>
+                         <p:ajax event="rowEditCancel" listener="#{tareasController.onRowCancel}" update=":form:msgs"/>
+                         
+            <p:column style="width:3rem;text-align: center">
+                
+                <p:commandButton  
+                    icon="pi pi-circle-off" title="View" actionListener="#{tareasController.eliminarTarea(t)}" update=":form">
+                    
+                </p:commandButton>
+            </p:column>
+            <p:column >
+                <p:cellEditor>
+                    <f:facet name="output">
+                      <h:outputText value="#{t.contenido}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText  value="#{t.contenido}" style="width:100%" label="Contenido"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
 
-                      <p:column>
-                          <h:outputText value="#{c.contenido}"/>
-                      </p:column>
-                      <p:column>
-                          <h:outputText value="#{c.importancia}"/>
-    
-                      </p:column>
-                                           <p:column>
-                                               <h:outputText value="#{c.idCategoria.nombre}"/>
-    
-                      </p:column>
-                                           <p:column>
-                                               <h:outputText value="#{c.idPrioridad.nombre}"/>
-                      </p:column>
-                  </p:selectManyMenu>
-              </h:form>
-          </div>
+           
+         <p:column >
+                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
+            </p:column>
+            
+            
+        </p:dataTable>
+                                         </h:form>
+
+    </div>
             </ui:define>
 
         </ui:composition>
