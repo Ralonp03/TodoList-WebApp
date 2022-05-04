@@ -25,6 +25,12 @@ public interface TareaFacadeLocal {
     Tarea find(Object id);
 
     List<Tarea> findAll();
+    
+    List<Tarea> findAllImportancia();
+    
+    List<Tarea> findAllToday();
+    
+    List<Tarea> findAllThisWeek();
 
     List<Tarea> findRange(int[] range);
 

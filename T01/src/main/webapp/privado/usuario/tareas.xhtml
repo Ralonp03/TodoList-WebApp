@@ -60,10 +60,21 @@
                  <h:form id="form">
                      <p:growl id="msgs" life="1500"/>
 
-                     <p:dataTable id="basicDT" var="t" value="#{tareasController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" >
+                     <p:dataTable widgetVar="customersTable" id="basicDT" var="t" value="#{tareasController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true"  filteredValue="#{t.contenido}">
                          <p:ajax event="rowEdit" listener="#{tareasController.onRowEdit}" update=":form:msgs"/>
-                         <p:ajax event="rowEditCancel" listener="#{tareasController.onRowCancel}" update=":form:msgs"/>
-                         
+                         <p:ajax event="rowEditCancel" listener="#{tareasController.onRowCancel}" update=":form:msgs" />
+
+                         <p:effect type="blind" event="update">
+                        <f:param name="direction" value="'horizontal'"/>
+                            </p:effect>
+                                                                          <f:facet name="header">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <div>
+                    <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" style="width:10rem" placeholder="Enter keyword" />
+                    </div>
+                </div>
+
+            </f:facet>
             <p:column style="width:3rem;text-align: center">
                 
                 <p:commandButton  
@@ -77,10 +88,10 @@
                       <h:outputText value="#{t.contenido}" />
                     </f:facet>
                     <f:facet name="input">
-                        <p:inputText  value="#{t.contenido}" style="width:100%" label="Contenido"/>
+                        <p:inputText  value="#{t.contenido}"  style="width:100%" label="Contenido"/>
                     </f:facet>
                 </p:cellEditor>
-            </p:column>
+            </p:column>{t
 
            
          <p:column >

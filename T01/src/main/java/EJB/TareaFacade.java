@@ -5,6 +5,13 @@
  */
 package EJB;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +35,57 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     public TareaFacade() {
         super(Tarea.class);
     }
+    
+    public List<Tarea> findAllImportancia(){
+        List<Tarea> lista = this.findAll();
+        List<Tarea> listaR = new ArrayList<Tarea>();
+        for(Tarea l:lista){
+            if(l.isImportancia() == true){
+                listaR.add(l);
+            }
+        }
+        
+        return listaR;
+    }
+    
+    public  List<Tarea> findAllToday(){
+     List<Tarea> lista = this.findAll();
+     List<Tarea> listaR = new ArrayList<Tarea>();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+      Date date = new Date();  
+      for(Tarea l:lista){
+          Instant instant1 = l.getFechaVencimiento().toInstant()
+          .truncatedTo(ChronoUnit.DAYS);
+           Instant instant2 = date.toInstant()
+         .truncatedTo(ChronoUnit.DAYS);
+
+            if(instant1.equals(instant2)){
+                listaR.add(l);
+            }
+        }
+        
+     return listaR;
+ 
+    }
+    
+    public List<Tarea> findAllThisWeek(){
+     List<Tarea> lista = this.findAll();
+     List<Tarea> listaR = new ArrayList<Tarea>();
+      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+      Date date = new Date();  
+      for(Tarea l:lista){
+          Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(l.getFechaVencimiento());
+             Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(date);
+   
+            if(calendar1.get(Calendar.WEEK_OF_MONTH) == calendar2.get(Calendar.WEEK_OF_MONTH)){
+                listaR.add(l);
+            }
+        }
+     return listaR;  
+    }
+    
+    
     
 }
