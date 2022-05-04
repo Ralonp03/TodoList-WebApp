@@ -26,6 +26,8 @@ public interface TareaFacadeLocal {
 
     List<Tarea> findAll();
     
+    List<Tarea> findAllFiltrado();
+    
     List<Tarea> findAllImportancia();
     
     List<Tarea> findAllToday();

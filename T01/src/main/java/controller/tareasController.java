@@ -57,7 +57,7 @@ private List<Categoria> listaCategorias;
 
 @PostConstruct
 public void init(){
-listaTareas = this.tareaEJB.findAll(); 
+listaTareas = this.tareaEJB.findAllFiltrado(); 
 listaPrioridades = this.prioridadEJB.findAll();
 prioridad = new Prioridad();
 listaCategorias = categoriaEJB.findAll();
@@ -67,7 +67,7 @@ listaCategorias = categoriaEJB.findAll();
     public void onRowEdit(RowEditEvent<Tarea> event) {
         Tarea tt = event.getObject();
         tareaEJB.edit(tt);
-        this.listaTareas = tareaEJB.findAll();
+        this.listaTareas = tareaEJB.findAllFiltrado();
         FacesMessage msg = new FacesMessage("Tarea actualizada","");
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -81,7 +81,7 @@ listaCategorias = categoriaEJB.findAll();
         try{
             
            this.tareaEJB.remove(tat);
-           this.listaTareas = tareaEJB.findAll();
+           this.listaTareas = tareaEJB.findAllFiltrado();
             
         }catch(Exception e){
             System.out.println("tareasController: "+e.getMessage());

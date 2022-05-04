@@ -89,7 +89,25 @@ private MenuFacadeLocal menuEJB;
     }
             return modelo;
     }
+    public void aboutus(){
+             String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+             try{
+             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/sobrenosotros.xhtml");
+             }catch(Exception e ){
+                 System.out.println("Exception "+e.getMessage());
+             }
+   
+    }
     
+    public void modificarusuario(){
+          String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+             try{
+             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/modificarusuario.xhtml");
+             }catch(Exception e ){
+                 System.out.println("Exception "+e.getMessage());
+             }
+        
+    }
     public Usuario getUser() {
         return user;
     }

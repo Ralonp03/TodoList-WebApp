@@ -13,9 +13,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import modelo.Tarea;
+import modelo.Usuario;
 
 /**
  *
@@ -36,8 +38,22 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
         super(Tarea.class);
     }
     
+    public List<Tarea> findAllFiltrado(){
+    List<Tarea> lista = this.findAll();
+    List<Tarea> listaR = new ArrayList<Tarea>();   
+    Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+     for(Tarea l:lista){
+            if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
+                listaR.add(l);
+            }
+        }
+        return listaR;
+    
+    }
+    
     public List<Tarea> findAllImportancia(){
-        List<Tarea> lista = this.findAll();
+        List<Tarea> lista = this.findAllFiltrado();
         List<Tarea> listaR = new ArrayList<Tarea>();
         for(Tarea l:lista){
             if(l.isImportancia() == true){
@@ -49,7 +65,7 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     }
     
     public  List<Tarea> findAllToday(){
-     List<Tarea> lista = this.findAll();
+     List<Tarea> lista = this.findAllFiltrado();
      List<Tarea> listaR = new ArrayList<Tarea>();
       SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
       Date date = new Date();  
@@ -69,7 +85,7 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     }
     
     public List<Tarea> findAllThisWeek(){
-     List<Tarea> lista = this.findAll();
+     List<Tarea> lista = this.findAllFiltrado();
      List<Tarea> listaR = new ArrayList<Tarea>();
       SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
       Date date = new Date();  
