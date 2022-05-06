@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+* {
+	box-sizing: border-box !important;
+}
+
+
+body {
+
+}
+
+.courses-container {
+	
+}
+.input-group{
+    margin: 20px !important;
+}
+.course {
+	background-color: #fff !important;
+	border-radius: 10px !important;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2) !important;
+	display: flex !important;
+	max-width: 100% !important;
+	margin: 0px 0px 10px 0px !important;
+	overflow: hidden !important;
+	width: 700px !important;
+}
+
+.course h6 {
+	opacity: 0.8 !important;
+	margin: 0 !important;
+	letter-spacing: 1px !important;
+	text-transform: uppercase !important;
+}
+
+.course h2 {
+	letter-spacing: 1px !important;
+	margin: 10px 0 !important;
+}
+
+.course-preview {
+	background-color: #2A265F !important;
+	color: #fff !important;
+	padding: 30px !important;
+	max-width: 250px !important;
+}
+
+.course-preview a {
+	color: #fff !important;
+	display: inline-block !important;
+	font-size: 12px !important;
+	opacity: 0.6 !important;
+	margin-top: 30px !important;
+	text-decoration: none !important;
+}
+
+.course-info {
+	padding: 30px !important;
+	position: relative !important;
+	width: 100% !important;
+}
+
+
+
+

@@ -5,6 +5,8 @@
  */
 package EJB;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,20 @@ public class RolFacade extends AbstractFacade<Rol> implements RolFacadeLocal {
 
     public RolFacade() {
         super(Rol.class);
+    }
+    
+    public List<Rol> findAllNotMine(Rol rol){
+        List<Rol> lista = this.findAll();
+        List<Rol> l = new ArrayList<Rol>();
+        for(Rol r : lista){
+            if(r.getIdRol() != rol.getIdRol()){
+                l.add(r);
+            }
+        }
+        return l;
+        
+        
+        
     }
     
 }

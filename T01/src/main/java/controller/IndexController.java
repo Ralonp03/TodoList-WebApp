@@ -49,7 +49,7 @@ public class IndexController implements Serializable{
         String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
         try {
             if(user.getIdRol().getIdRol() == 1){
-            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/administrador/inicio.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/administrador/modificarusuario.xhtml");
             }else if(user.getIdRol().getIdRol() == 2){
             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/tareas.xhtml");    
             // FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/inicio.xhtml");    
