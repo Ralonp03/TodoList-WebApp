@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantillaTareas.xhtml">
+
+            <ui:define name="content">
+                        <h:outputStylesheet library="css" name="comofunciona.css" />
+
+                 <div class="container-404">
+            <h1 style="color: purple">Funcionamiento del modo Usuario</h1>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-Se podra modifica y dar de baja el usuario.</h4>
+            <p>El usuario podra modificar la contraseña y correo electronico unicamente, y dar de baja el usuario.</p>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-Las tareas las podras hacer en cualquiera pestaña..</h4>
+            <p>Las tareas las podras hacer en cualquiera pestaña aunque solo permaneceran disponibles en las pestaña pertinente.</p>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-Partes de una tarea.</h4>
+            <p>Cada tarea va a estar formada por una descripcion, que sera en porpio contenido de la tarea, ademas estara compuesta por los siguientes campos opcionales, una fecha de finalizacion de la tarea(por defecto se supone que es el propio dia), una prioridad(por defecto es 1, la mas baja) y si es importante la tarea. Una vez realizada una tarea podras visualizarla en el menus correpondiente.
+            Se puede modificar cierta informacion de una tarea, ademas cuando se halla completado una tarea se debera clickar en ella para que aparezca como completada y quitarnosla del medio.</p>
+            <hr class="barra" size="3px" color="purple" />
+            <p>Para mayor información: <b>contacto@gmail.com</b></p>
+            </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
