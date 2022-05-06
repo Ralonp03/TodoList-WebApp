@@ -26,6 +26,8 @@ public interface RolFacadeLocal {
 
     Rol find(Object id);
     
+    List<Rol> findAllNotMine(Rol rol);
+    
     List<Rol> findAll();
 
     List<Rol> findRange(int[] range);

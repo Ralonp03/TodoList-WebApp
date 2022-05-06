@@ -6,6 +6,7 @@
 package controller;
 
 import EJB.PersonaFacadeLocal;
+import EJB.RolFacadeLocal;
 import EJB.UsuarioFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
@@ -16,7 +17,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import modelo.Persona;
+import modelo.Rol;
 import modelo.Usuario;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -33,14 +36,21 @@ private UsuarioFacadeLocal usuarioEJB;
 @EJB
 private PersonaFacadeLocal personaEJB;
 
+@EJB
+private RolFacadeLocal rolEJB;
+
+
 private Usuario usuario;
 private List<Usuario> listaUsuarios;
 private String accion;
 private Persona persona;
+private List<Rol> listaRoles;
+private Rol rol;
 
 @PostConstruct
     public void init(){
         listaUsuarios = usuarioEJB.findAll();
+        rol = new Rol();
         usuario = new Usuario();
     }
     
@@ -48,6 +58,7 @@ private Persona persona;
     public void modificarUsuario(Usuario sus){
         usuario = sus;
         this.accion = "M";
+        listaRoles = rolEJB.findAllNotMine(sus.getIdRol());
         
     }
     
@@ -61,12 +72,15 @@ private Persona persona;
             String miCorreo = usuario.getCorreo();
             if(!usuarioEJB.mismoCorreoDistintoMio(usuario)){
                      FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ya hay un usuario con este correo.",""));
+
               }else{
+            usuario.setIdRol(rolEJB.find(rol.getIdRol()));
+            rolEJB.edit(usuario.getIdRol());
             personaEJB.edit(usuario.getIdPersona());
             usuarioEJB.edit(usuario);
             listaUsuarios = usuarioEJB.findAll();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario modificado con exito",""));
-
+            PrimeFaces.current().ajax().addCallbackParam("loggedIn", true);
             }
         }catch(Exception e){
             System.out.println("ModificaUSUAIROcONTROLLER"+e.getStackTrace());
@@ -75,7 +89,7 @@ private Persona persona;
     
     public void eliminar(Usuario sus){
       try{  
-                        Persona per = sus.getIdPersona();
+            Persona per = sus.getIdPersona();
             usuarioEJB.remove(sus);
             personaEJB.remove(per);
             listaUsuarios = usuarioEJB.findAll();
@@ -117,6 +131,22 @@ private Persona persona;
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public List<Rol> getListaRoles() {
+        return listaRoles;
+    }
+
+    public void setListaRoles(List<Rol> listaRoles) {
+        this.listaRoles = listaRoles;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
     
 }

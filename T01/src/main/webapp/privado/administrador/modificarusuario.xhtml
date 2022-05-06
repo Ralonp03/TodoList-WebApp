@@ -12,7 +12,21 @@
 
             <ui:define name="content">
                         <h:outputStylesheet library="css" name="modificarusuario.css" />
+                    <script type="text/javascript">
+                function handleLoginRequest(xhr, status, args) {
+                    if(args.validationFailed || !args.loggedIn) {
+                        PF('wdialogo1').jq.effect("shake", {times:5}, 100);
 
+                    }
+                    else {
+                                                
+                        PF('wdialogo1').hide();
+                        $('#loginLink').fadeOut();
+                        Windows.window.location.reload();
+
+                    }
+                }
+            </script>
               <div class="product card">
                   <p style="font-size:40px;text-align: center;" >ADMINISTRAR USUARIOS</p>
                   <hr style="margin-bottom:10px"></hr>
@@ -37,7 +51,7 @@
                                                   <h6><b>CONTRASEÑA: </b>#{usr.password}</h6>
                                                   <h6><b>ROL: </b>#{usr.idRol.descripcion}</h6>
                                 <p:commandButton styleClass="rounded-button" style="margin: 20px;" value="Modificar Usuario" oncomplete="PF('wdialogo1').show();" icon="pi pi-book"
-                                                     actionListener="#{modificarUsuarioController.modificarUsuario(usr)}" update=":formDialogo:dialogo1">
+                                                 actionListener="#{modificarUsuarioController.modificarUsuario(usr)}" update=":formDialogo:dialogo1 ">
                                     </p:commandButton>
                                     <p:commandButton styleClass="rounded-button ui-button-danger" style="margin: 20px;" value="Eliminar usuario" icon="pi pi-trash"
                                                      actionListener="#{modificarUsuarioController.eliminar(usr)}" update="@form">
@@ -65,12 +79,13 @@
                                                    <p:inputText value="#{modificarUsuarioController.usuario.idPersona.nombre}" id="pn"  required="true" requiredMessage="Nombre es obligatorio"/>
                                                 </div>
                                                 <div class="input-group">
-                                                                                                        <label for="pa">Apellidos</label>
+                                                  <label for="pa">Apellidos</label>
 
                                                     <p:inputText value="#{modificarUsuarioController.usuario.idPersona.apellidos}" id="pa"  required="true" requiredMessage="Apellidos es obligatorio"/>
                                                 </div>
+
                                                 <div class="input-group">
-                                                                                                        <label for="uc">Correo electronico</label>
+                                                 <label for="uc">Correo electronico</label>
 
                                                     <p:inputText value="#{modificarUsuarioController.usuario.correo}" id="uc"  required="true" validatorMessage="Correo electronico no valido" requiredMessage="Correo es obligatorio">
                                                         <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
@@ -83,10 +98,18 @@
                                                                                <f:validateLength minimum="8" maximum="100"/>
                                                     </p:inputText>
                                                 </div>
+                                                                              <div class="input-group">
+                                                 <label for="option">Rol</label>
+
+                                                 <p:selectOneMenu id="option" value="#{modificarUsuarioController.rol.idRol}">
+                                                     <f:selectItem itemLabel="#{modificarUsuarioController.usuario.idRol.descripcion}" itemValue="#{modificarUsuarioController.usuario.idRol.idRol}"/>
+                                                     <f:selectItems rendered="#{p.idRol} != #{modificarUsuarioController.usuario.idRol.idRol}" value="#{modificarUsuarioController.listaRoles}" var="p" itemValue="#{p.idRol}" itemLabel="#{p.descripcion}" />
+                                                                    </p:selectOneMenu>
+                                                </div>
                               
                                        </h:panelGrid>         
 
-                          <p:commandButton styleClass="rounded-button ui-button-success" style="margin: 20px;" value="Modificar" icon="pi pi-database" actionListener="#{modificarUsuarioController.modificar()}" update="growl"  rendered="#{modificarUsuarioController.accion == 'M'}"/>
+                          <p:commandButton styleClass="rounded-button ui-button-success" style="margin: 20px;" value="Modificar" icon="pi pi-database" actionListener="#{modificarUsuarioController.modificar()}" update="growl"  oncomplete="handleLoginRequest(xhr, status, args)" rendered="#{modificarUsuarioController.accion == 'M'}"/>
                               
                               <p:commandButton styleClass="rounded-button ui-button-success" style="margin: 20px;" value="Eliminar" icon="pi pi-database" actionListener="#{modificarUsuarioController.eliminar()}" update=":formTodo:tabla" oncomplete="PF('wdialogo1').hide();" rendered="#{modificarUsuarioController.accion == 'E'} "/>
                                         
