@@ -1,16 +1,104 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
         <ui:composition template="./../../WEB-INF/template/plantillaTareas.xhtml">
 
             <ui:define name="content">
-                content
-            </ui:define>
+                        <h:outputStylesheet library="css" name="modificarusuario.css" />
 
+              <div class="product card">
+                  <p style="font-size:40px;text-align: center;" >ADMINISTRAR USUARIOS</p>
+                  <hr style="margin-bottom:10px"></hr>
+                <h:form id="formTodo">
+                      <p:growl id="gr" class="as" life="2000"/>
+
+                      <p:dataScroller style="display: flex;justify-content: center;width: 100%;padding: 0px;margin: 0px;" id="tabla" value="#{modificarUsuarioController.listaUsuarios}" var="usr" chunkSize="10" mode="inline"
+                                    scrollHeight="700" >
+
+                                  <div class="courses-container">
+                                  <div class="course">
+                                          <div class="course-preview">
+                                                  <p:graphicImage style="border-radius: 50%;width:  130px;height: 130px;margin-top: 15px;" name="profileB.jpg" library="img"/>
+                                          </div>
+                                          <div class="course-info">
+                                                  <div class="progress-container">
+                                                          <div class="progress"></div>
+                                                          
+                                                  </div>
+                                                  <h2>#{usr.idPersona.nombre} #{usr.idPersona.apellidos}</h2>
+                                                  <h6><b>CORREO: </b>#{usr.correo}</h6>
+                                                  <h6><b>CONTRASEÑA: </b>#{usr.password}</h6>
+                                                  <h6><b>ROL: </b>#{usr.idRol.descripcion}</h6>
+                                <p:commandButton styleClass="rounded-button" style="margin: 20px;" value="Modificar Usuario" oncomplete="PF('wdialogo1').show();" icon="pi pi-book"
+                                                     actionListener="#{modificarUsuarioController.modificarUsuario(usr)}" update=":formDialogo:dialogo1">
+                                    </p:commandButton>
+                                    <p:commandButton styleClass="rounded-button ui-button-danger" style="margin: 20px;" value="Eliminar usuario" icon="pi pi-trash"
+                                                     actionListener="#{modificarUsuarioController.eliminar(usr)}" update="@form">
+                                                    <p:confirm header="Importante" message="Vas a eliminar de forma permente al usuario. Desea proceder con la eliminacion?" icon="pi pi-exclamation-triangle"/>
+
+                                    </p:commandButton>
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" />
+                                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+
+                                    </p:confirmDialog>                                          </div>
+                                  </div>
+                          </div>
+                    </p:dataScroller>
+                      
+                </h:form>
+                  <h:form id="formDialogo" >
+                                                      <p:growl id="growl" class="as" life="2000"/>
+
+                      <p:dialog style="margin:10px;" id="dialogo1" widgetVar="wdialogo1" modal="true" closeOnEscape="true" draggable="false" resizable="false" header="Asistente">
+                          <h:panelGrid columns="2">
+                                                  <div class="input-group">
+                                                    <label for="pn">Nombre</label>
+
+                                                   <p:inputText value="#{modificarUsuarioController.usuario.idPersona.nombre}" id="pn"  required="true" requiredMessage="Nombre es obligatorio"/>
+                                                </div>
+                                                <div class="input-group">
+                                                                                                        <label for="pa">Apellidos</label>
+
+                                                    <p:inputText value="#{modificarUsuarioController.usuario.idPersona.apellidos}" id="pa"  required="true" requiredMessage="Apellidos es obligatorio"/>
+                                                </div>
+                                                <div class="input-group">
+                                                                                                        <label for="uc">Correo electronico</label>
+
+                                                    <p:inputText value="#{modificarUsuarioController.usuario.correo}" id="uc"  required="true" validatorMessage="Correo electronico no valido" requiredMessage="Correo es obligatorio">
+                                                        <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                                                    </p:inputText>
+                                                </div>
+                                                <div class="input-group">
+                                                                                                      <label for="up1">Contraseña</label>
+
+                                                    <p:inputText   id="up1" value="#{modificarUsuarioController.usuario.password}" required="true" validatorMessage="Contraseña mayor a 8 caracteres" requiredMessage="Contraseña es obligatoria" >
+                                                                               <f:validateLength minimum="8" maximum="100"/>
+                                                    </p:inputText>
+                                                </div>
+                              
+                                       </h:panelGrid>         
+
+                          <p:commandButton styleClass="rounded-button ui-button-success" style="margin: 20px;" value="Modificar" icon="pi pi-database" actionListener="#{modificarUsuarioController.modificar()}" update="growl"  rendered="#{modificarUsuarioController.accion == 'M'}"/>
+                              
+                              <p:commandButton styleClass="rounded-button ui-button-success" style="margin: 20px;" value="Eliminar" icon="pi pi-database" actionListener="#{modificarUsuarioController.eliminar()}" update=":formTodo:tabla" oncomplete="PF('wdialogo1').hide();" rendered="#{modificarUsuarioController.accion == 'E'} "/>
+                                        
+                              <p:commandButton styleClass="rounded-button ui-button-help" icon="pi pi-history" style="margin: 20px;" value="Salir" onclick="PF('wdialogo1').hide();"/>
+                      </p:dialog>
+                                       
+                                  
+                            
+                  </h:form>
+            </div>
+
+            </ui:define>
         </ui:composition>
 
     </body>

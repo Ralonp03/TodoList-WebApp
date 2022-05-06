@@ -26,6 +26,8 @@ public interface UsuarioFacadeLocal {
     
     Usuario find(Object id);
     
+    boolean mismoCorreoDistintoMio(Usuario usuario);
+    
     Usuario verificarUsuario(Usuario us);
 
     List<Usuario> findAll();

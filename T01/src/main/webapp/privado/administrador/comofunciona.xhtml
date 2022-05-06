@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/template/plantillaTareas.xhtml">
+
+            <ui:define name="content">
+                        <h:outputStylesheet library="css" name="comofunciona.css" />
+
+                 <div class="container-404">
+            <h1 style="color: purple">Funcionamiento del modo Administrador</h1>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-Se podra dar de baja y modificar todos los usuario de la aplicación.</h4>
+            <p>El administrador tiene como tarea principal recuperar contraseñas y dar de baja cuentas.</p>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-No se podra obtener la informacion personal(las tareas) de cualquier usuario.</h4>
+            <p>Las tareas permanecen privadas, y el administrado no tendra acceso a ellas, el unico que podra verlas es el propio usuario.</p>
+            <hr class="barra" size="1px" color="#FFD700" />
+            <h4>-Condiciones de un usuario bien formado.</h4>
+            <p>El sistema solo admitira usuario que tengan una contraseña de mas de 8 caracteres y un correo electronico unico, no puede repetirse entre usuario. De no cumplirse las premisas anteriores el sistema informara del error pertinente y no permitira crear el usuario.</p>
+            <hr class="barra" size="3px" color="purple" />
+            <p>Para mayor información: <b>contacto@gmail.com</b></p>
+            </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

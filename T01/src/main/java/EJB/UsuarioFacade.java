@@ -43,6 +43,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         
     }
     
+    @Override
+    public boolean mismoCorreoDistintoMio(Usuario usuario){
+        List<Usuario> lista = this.findAll();
+        for(Usuario u : lista){
+            if((usuario.getCorreo().equals(u.getCorreo())) && (usuario.getIdUsuario() != u.getIdUsuario())){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     
     @Override
     public Usuario verificarUsuario(Usuario us){
