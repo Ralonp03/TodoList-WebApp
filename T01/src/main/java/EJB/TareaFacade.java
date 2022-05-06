@@ -102,6 +102,17 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
      return listaR;  
     }
     
+    public void removeTareasUser(Usuario usuario){
+        List<Tarea> listaTareas = this.findAll();
+        for(Tarea t: listaTareas){
+            if(usuario.getIdPersona().getIdPersona() == t.getIdPersona().getIdPersona()){
+                this.remove(t);
+            }
+        }
+        
+        
+    }
+    
     
     
 }

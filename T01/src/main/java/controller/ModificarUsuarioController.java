@@ -7,6 +7,7 @@ package controller;
 
 import EJB.PersonaFacadeLocal;
 import EJB.RolFacadeLocal;
+import EJB.TareaFacadeLocal;
 import EJB.UsuarioFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
@@ -39,6 +40,8 @@ private PersonaFacadeLocal personaEJB;
 @EJB
 private RolFacadeLocal rolEJB;
 
+@EJB
+private TareaFacadeLocal tareaEJB;
 
 private Usuario usuario;
 private List<Usuario> listaUsuarios;
@@ -89,6 +92,7 @@ private Rol rol;
     
     public void eliminar(Usuario sus){
       try{  
+            tareaEJB.removeTareasUser(sus);
             Persona per = sus.getIdPersona();
             usuarioEJB.remove(sus);
             personaEJB.remove(per);

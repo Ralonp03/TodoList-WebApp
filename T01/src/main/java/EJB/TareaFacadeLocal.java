@@ -8,6 +8,7 @@ package EJB;
 import java.util.List;
 import javax.ejb.Local;
 import modelo.Tarea;
+import modelo.Usuario;
 
 /**
  *
@@ -22,6 +23,8 @@ public interface TareaFacadeLocal {
 
     void remove(Tarea tarea);
 
+    void removeTareasUser(Usuario usuario);
+    
     Tarea find(Object id);
 
     List<Tarea> findAll();

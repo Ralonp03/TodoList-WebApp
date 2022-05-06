@@ -1,5 +1,11 @@
 
+.login-wrapper{
+position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 
+}
 #growl{
 right: 20px;
 top: 50%;
@@ -11,7 +17,11 @@ top: 50%;
    margin-left:-150px;
     
 }
-
+.jj{
+    
+     color: #FFD700;
+     font-size: 14px;
+}
 
 .form {
       justify-content: center;
@@ -27,27 +37,6 @@ top: 50%;
 }
 
 
-.form::before {
-  content:'';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: rgba(255,255,255, 0.08);
-  transform: skewX(-26deg);
-  transform-origin: bottom left;
-  border-radius: 10px;
-  pointer-events: none;
-}
-.form img {
-  position: absolute;
-  top: -130px;
-  left: calc(50% - 98px);
-  width: 200px;
-  background: rgba(255,255,255, 0.8);
-  border-radius: 50%;
-}
 .form h2 {
   text-align: center;
   letter-spacing: 1px;
@@ -89,6 +78,20 @@ top: 50%;
 .submit-btn {
   background-color: #FFD700 !important;
   color: black !important;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 20px !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  border-style: hidden !important;
+}
+.submit-btn2 {
+  background-color: #8d212c
+ !important;
+  color: white !important;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;

@@ -16,34 +16,39 @@
      <div class="form">
             <h:form id="f" class="form2">
               <p:growl id="growl" class="as" life="2000"/>
-              <img src="#{resource['img/logoF.jpg']}" alt=""/>
-              <h2>Inicio de sesión</h2>
+              <h2>Modificar usuario</h2>
+              <label class="jj" for="pn">Nombre</label>
+              <div  class="input-group">
+                  <p:inputText value="#{modificaruController.usuario.idPersona.nombre}" id="pn" disabled="true"/>
+              </div>
+              
+              <label class="jj"  for="pa">Apellidos</label>
               <div class="input-group">
-                  <p:inputText value="#{registroController.persona.nombre}" id="pn"  required="true" requiredMessage="Nombre es obligatorio"/>
-                  <label for="pn">Nombre</label>
+                  <p:inputText value="#{modificaruController.usuario.idPersona.apellidos}" id="pa"  disabled="true"/>
               </div>
               <div class="input-group">
-                  <p:inputText value="#{registroController.persona.apellidos}" id="pa"  required="true" requiredMessage="Apellidos es obligatorio"/>
-                  <label for="pa">Apellidos</label>
-              </div>
-              <div class="input-group">
-                  <p:inputText value="#{registroController.usuario.correo}" id="uc"  required="true" validatorMessage="Correo electronico no valido" requiredMessage="Correo es obligatorio">
+                  <p:inputText value="#{modificaruController.usuario.correo}" id="uc"  required="true" validatorMessage="Correo electronico no valido" requiredMessage="Correo es obligatorio">
                       <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
                   </p:inputText>
                   <label for="uc">Correo electronico</label>
               </div>
-              <div class="input-group">
-                  <p:password  redisplay="true" id="up1" value="#{registroController.usuario.password}" match="up2" required="true" validatorMessage="Las contraseñas no coinciden" requiredMessage="Contraseña es obligatoria" />
+
+               <div class="input-group">
+                   <p:inputText   id="up2" value="#{modificaruController.usuario.password}" validatorMessage="La contraseña tiene que ser minimo 8 caracteres de larga">
+                               <f:validateLength minimum="8" maximum="100"/>
+                   </p:inputText>
                 <label for="up1">Contraseña</label>
               </div>
-               <div class="input-group">
-                   <p:password  redisplay="true" id="up2" value="#{registroController.usuario.password}" validatorMessage="La contraseña tiene que ser minimo 8 caracteres de larga">
-                               <f:validateLength minimum="8" maximum="100"/>
-                   </p:password>
-                <label for="up1">Repita la Contraseña</label>
-              </div>
-              <p:commandButton value="Regístrate"  update="@form" class="submit-btn" actionListener="#{registroController.create()}" />
+              <p:commandButton value="Modificar usuario"  update="@form" class="submit-btn" actionListener="#{modificaruController.modificar()}" />
+             <p:commandButton class="submit-btn2"  value="Eliminar usuario" 
+                              actionListener="#{modificaruController.elimiar()}" update="@form"> 
+                                                                     <p:confirm header="Importante" message="Va a eliminar de forma permanente su usuario. De proceder va a perder todas las tareas, estas de acuerdo?" icon="pi pi-exclamation-triangle"/>
 
+                                    </p:commandButton>
+              <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+                                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                                    </p:confirmDialog>  
             </h:form >
 
         </div>
