@@ -41,13 +41,28 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     public List<Tarea> findAllFiltrado(){
     List<Tarea> lista = this.findAll();
     List<Tarea> listaR = new ArrayList<Tarea>();   
+   Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+
+    Date date = calendar.getTime();
+
     Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 
      for(Tarea l:lista){
             if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
+                if(l.getFechaVencimiento().before(date)){
+                    l.setPasado("1");
+                }else{
+                    l.setPasado("0");
+                }
+                this.edit(l);
                 listaR.add(l);
             }
         }
+     
         return listaR;
     
     }

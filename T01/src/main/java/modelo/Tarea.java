@@ -41,6 +41,9 @@ public class Tarea {
     @Column(name="Importancia")
     private boolean importancia;
     
+    @Column(name="pasado")
+    private String pasado;
+    
     @JoinColumn(name="idPersona")
     @ManyToOne
     private Persona idPersona;
@@ -108,6 +111,16 @@ public class Tarea {
     public void setIdPrioridad(Prioridad idPrioridad) {
         this.idPrioridad = idPrioridad;
     }
+
+    public String getPasado() {
+        return pasado;
+    }
+
+    public void setPasado(String pasado) {
+        this.pasado = pasado;
+    }
+
+  
     
     
 }
