@@ -11,98 +11,120 @@
         <ui:composition template="./../../WEB-INF/template/plantillaTareas.xhtml">
 
             <ui:define name="content">
-              <script type="text/javascript">
-                function handleLoginRequest(xhr, status, args) {
-                    if(args.validationFailed || !args.loggedIn) {
-                        PF('dlg').jq.effect("shake", {times:5}, 100);
+                <script type="text/javascript">
+                    function handleLoginRequest(xhr, status, args) {
+                        if (args.validationFailed || !args.loggedIn) {
+                            PF('dlg').jq.effect("shake", {times: 5}, 100);
+                        } else {
+
+                            PF('dlg').hide();
+                            $('#loginLink').fadeOut();
+                            window.location.reload();
+
+                        }
                     }
-                    else {
-                                                
-                        PF('dlg').hide();
-                        $('#loginLink').fadeOut();
-                        window.location.reload();
+                </script>
+                <h:outputStylesheet library="css" name="tareas.css" />
 
-                    }
-                }
-            </script>
-            <h:outputStylesheet library="css" name="tareas.css" />
+                <div class="card" id="aaaa"> 
 
-                <div class="card"> 
+                    <h:form >        
+                        <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" >
+                            <p:commandButton icon="pi pi-plus-circle" style="margin-bottom: 20px" value="Añadir tarea"  styleClass="ui-button-raised" type="button"  />
 
-                        <h:form >        
-                            <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" >
-                                  <p:commandButton style="margin-bottom: 20px" value="Añadir tarea"  styleClass="ui-button-raised" type="button"  />
+                        </h:outputLink>
 
-                            </h:outputLink>
+                        <p:growl id="growl"   life="2000" />
 
-                            <p:growl id="growl"   life="2000" />
-                                
-                            <p:dialog   widgetVar="dlg" resizable="false">
-                                <p:inputText id="content" value="#{importanteController.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
-                                <div></div>
-                                <p:selectOneMenu id="prioridad" value="#{importanteController.prioridad.idPrioridad}" >
-                                   <f:selectItem itemLabel="Selecciona una prioridad" itemValue=""/>
-                                   <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
-                                    </p:selectOneMenu>
-                                <h5>Es importante?</h5>
-                                   <p:selectBooleanButton onLabel="Yes" offLabel="No"
-                                                          onIcon="pi pi-check" offIcon="pi pi-times" style="width:6rem" value="#{importanteController.tar.importancia}"/>
-                                   <p:datePicker id="basic" value="#{importanteController.tar.fechaVencimiento}" placeholder="Horario" />
+                        <p:dialog   widgetVar="dlg" resizable="false" header="">
+                            <div class="p-col-12 p-md-4">
+                                <div style="margin-left: 12px;" class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-book"></i></div>
+                                    <p:inputText placeholder="Descripcion de la tarea..." style=" width: 33rem" id="content" value="#{importanteController.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
+                                </div>
+                            </div>
+                            <div>
+                                <p:selectOneMenu   style="margin: 10px;" id="prioridad" value="#{importanteController.prioridad.idPrioridad}" >
+                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                </p:selectOneMenu>
+                                <p:selectBooleanButton  
+                                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{importanteController.tar.importancia}"/>
+                                <p:datePicker style="margin: 10px;" id="basic" value="#{importanteController.tar.fechaVencimiento}" placeholder="Fecha finalización"/>
 
-                                    <f:facet name="footer">
-                                        <p:commandButton value="Añadir tarea" update="growl" action="#{importanteController.crearTarea()}"
-                                                         oncomplete="handleLoginRequest(xhr, status, args)" />
-                                    </f:facet>  
-                            </p:dialog>    
-                        </h:form>
+                                <p:commandButton value="Añadir tarea" update="growl" action="#{importanteController.crearTarea()}"
+                                                 oncomplete="handleLoginRequest(xhr, status, args)" />
+                            </div>
+                        </p:dialog>    
+                    </h:form>
                 </div>
-             <div class="card">
-                 <h:form id="form">
-                     <p:growl id="msgs" life="1500"/>
+                <div class="card" id="aaa">
+                    <h:form id="form">
+                        <p:growl id="msgs" life="1500"/>
 
-                     <p:dataTable widgetVar="customersTable" id="basicDT" var="t" value="#{importanteController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true"  filteredValue="#{t.contenido}">
-                         <p:ajax event="rowEdit" listener="#{importanteController.onRowEdit}" update=":form:msgs"/>
-                         <p:ajax event="rowEditCancel" listener="#{importanteController.onRowCancel}" update=":form:msgs" />
+                        <p:dataTable   widgetVar="customersTable" id="basicDT" var="t" value="#{importanteController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" 
+                                     >
+                            <p:ajax event="rowEdit" listener="#{importanteController.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{importanteController.onRowCancel}" update=":form:msgs" />
 
-                         <p:effect type="blind" event="update">
-                        <f:param name="direction" value="'horizontal'"/>
+                            <p:effect type="blind" event="update">
+                                <f:param name="direction" value="'horizontal'"/>
                             </p:effect>
-                                                                          <f:facet name="header">
-                <div class="p-d-flex p-ai-center p-jc-between">
-                    <div>
-                    <p:inputText id="globalFilter" onkeyup="PF('customersTable').filter()" style="width:10rem" placeholder="Enter keyword" />
-                    </div>
+
+
+                            <p:column style="width:4rem;text-align: center" headerText="Busqueda: ">
+
+                                <p:commandButton  
+                                    icon="pi pi-spin pi-spinner"  class="susm" title="Tarea completada" actionListener="#{importanteController.eliminarTarea(t)}" update=":form">
+
+                                </p:commandButton>
+                            </p:column>
+                            <p:column filterBy="#{t.contenido}" style="width: 10rem;margin-left: 0px;">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{t.contenido}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText  value="#{t.contenido}"  style="width:100%" label="Contenido"/>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column style="width: 10rem;text-align: center;" headerText="Prioridad" sortBy="#{t.idPrioridad.nombre}">
+                                <div class="#{t.idPrioridad.color}">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText  value="#{t.idPrioridad.nombre}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu  style="margin: 10px;"  value="#{t.idPrioridad.idPrioridad}" >
+                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                </p:selectOneMenu>                               
+                                    </f:facet>
+                                </p:cellEditor>
+                                    </div>
+                            </p:column>
+                            <p:column class="hora#{t.pasado}" style="width: 12rem;margin: 40px;" headerText="Fecha vencimiento" sortBy="#{t.fechaVencimiento}">
+
+                                <h:outputText  value="#{importanteController.al(t.fechaVencimiento)}" >
+                                    
+                            </h:outputText>                                   
+                            </p:column>
+                            
+                            <p:column style="width: 5rem;margin: 40px;text-align: center;" headerText="Importancia" sortBy="#{t.importancia}">
+
+                                  <p:selectBooleanButton  
+                                      onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{t.importancia}" disabled="true"/>                               
+                            </p:column>
+
+                            <p:column style="text-align: right">
+                                
+                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row" styleClass="ui-button-warning" />
+                            </p:column>
+
+
+                        </p:dataTable>
+                    </h:form>
+
                 </div>
-
-            </f:facet>
-            <p:column style="width:3rem;text-align: center">
-                
-                <p:commandButton  
-                    icon="pi pi-circle-off" title="View" actionListener="#{importanteController.eliminarTarea(t)}" update=":form">
-                    
-                </p:commandButton>
-            </p:column>
-            <p:column >
-                <p:cellEditor>
-                    <f:facet name="output">
-                      <h:outputText value="#{t.contenido}" />
-                    </f:facet>
-                    <f:facet name="input">
-                        <p:inputText  value="#{t.contenido}" style="width:100%" label="Contenido"/>
-                    </f:facet>
-                </p:cellEditor>
-            </p:column>{t
-
-           
-         <p:column >
-                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row"/>
-            </p:column>
-            
-            
-        </p:dataTable>
-                                         </h:form>
-
-    </div>
             </ui:define>
 
         </ui:composition>

@@ -38,13 +38,20 @@
                        <f:validateLength minimum="8" maximum="100"/>
            </p:password>
         <label for="up1">Repita la Contraseña</label>
-      </div>
+          </div>
+
       <p:commandButton value="Regístrate"  update="@form" class="submit-btn" actionListener="#{registroController.create()}" />
 
     </h:form >
     
     <h:form>
       <p:commandButton value="Volver atras"   class="submit-btn2" actionListener="#{registroController.atras()}"/>
+    </h:form>
+    <h:form>
+        <div  class="input-group">
+            <p:commandButton  class="submit-btn2"  value="Usuario Pro?" type="button" id="animate" icon="pi pi-shopping-cart"/>
+    <p:tooltip for="animate" value="Para usuario Pro realice una donacion de 5 euros a ricardo@gmail.com" showEffect="clip" hideEffect="fold" />
+        </div>
     </h:form>
 </div>
   </div>

@@ -9,7 +9,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="cssLayout.css"/>
-        <title>Plantilla</title>
+        <title>Aplicacion TODO</title>
         <f:event type="preRenderView" listener="#{plantillaController.verificarYmostrar()}"/>
     </h:head>
 
@@ -20,15 +20,16 @@
             
 
                  <img id="imgSide" src="#{resource['img/logoF.jpg']}" alt=""/>
-                 <h:outputText id="nombreUser" value="#{menuController.user.idPersona.nombre}" />
+                 <i id="ll" class="pi pi-user" style="font-size: 2rem">                
+                     <h:outputText  style="margin-left:0px;padding-left: 0px;" id="nombreUser" value="#{menuController.user.idPersona.nombre}" /></i>
                  <hr class="barra" size="1px" color="white" /> 
                  <h:form>
                     <p:menu class="ffd" toggleable="true" model="#{menuController.modelo}"/>
                  </h:form>
                  <hr class="barra" size="1px" color="white" />   
 
-                 <h:form>
-                    <p:commandLink class="peso" value="Cerrar Sesion"  actionListener="#{menuController.destruitSesion()}"/>
+                 <h:form class="pero">
+                         <p:commandButton icon="pi pi-sign-out" class="peso" value="Cerrar Sesión"  actionListener="#{menuController.destruitSesion()}"/>
                  </h:form>
 
             </ui:insert>

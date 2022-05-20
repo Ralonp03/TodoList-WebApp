@@ -30,7 +30,7 @@
 
                     <h:form >        
                         <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" >
-                            <p:commandButton style="margin-bottom: 20px" value="Añadir tarea"  styleClass="ui-button-raised" type="button"  />
+                            <p:commandButton icon="pi pi-plus-circle" style="margin-bottom: 20px" value="Añadir tarea"  styleClass="ui-button-raised" type="button"  />
 
                         </h:outputLink>
 
@@ -78,7 +78,7 @@
 
                                 </p:commandButton>
                             </p:column>
-                            <p:column filterBy="#{t.contenido}" style="width: 20rem;margin-left: 0px;">
+                            <p:column filterBy="#{t.contenido}" style="width: 10rem;margin-left: 0px;">
                                 <p:cellEditor>
                                     <f:facet name="output">
                                         <h:outputText value="#{t.contenido}" />
@@ -109,7 +109,7 @@
                             </h:outputText>                                   
                             </p:column>
                             
-                            <p:column style="width: 10rem;margin: 40px;text-align: center;" headerText="Importancia" sortBy="#{t.importancia}">
+                            <p:column style="width: 5rem;margin: 40px;text-align: center;" headerText="Importancia" sortBy="#{t.importancia}">
 
                                   <p:selectBooleanButton  
                                       onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{t.importancia}" disabled="true"/>                               

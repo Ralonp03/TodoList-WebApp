@@ -41,7 +41,7 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     public List<Tarea> findAllFiltrado(){
     List<Tarea> lista = this.findAll();
     List<Tarea> listaR = new ArrayList<Tarea>();   
-   Calendar calendar = Calendar.getInstance();
+    Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.HOUR_OF_DAY, 0);
     calendar.set(Calendar.MINUTE, 0);
     calendar.set(Calendar.SECOND, 0);
@@ -68,53 +68,103 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     }
     
     public List<Tarea> findAllImportancia(){
-        List<Tarea> lista = this.findAllFiltrado();
-        List<Tarea> listaR = new ArrayList<Tarea>();
+        List<Tarea> lista = this.findAll();
+    List<Tarea> listaR = new ArrayList<Tarea>();   
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+    Date date = calendar.getTime();
+
+    Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
         for(Tarea l:lista){
+            if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
+
             if(l.isImportancia() == true){
+                 if(l.getFechaVencimiento().before(date)){
+                    l.setPasado("1");
+                }else{
+                    l.setPasado("0");
+                }
+                this.edit(l);
                 listaR.add(l);
             }
+        }
         }
         
         return listaR;
     }
     
     public  List<Tarea> findAllToday(){
-     List<Tarea> lista = this.findAllFiltrado();
-     List<Tarea> listaR = new ArrayList<Tarea>();
-      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-      Date date = new Date();  
-      for(Tarea l:lista){
+
+    List<Tarea> lista = this.findAll();
+    List<Tarea> listaR = new ArrayList<Tarea>();   
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+
+    Date date = calendar.getTime();
+
+    Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+    for(Tarea l:lista){
+         if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
+
           Instant instant1 = l.getFechaVencimiento().toInstant()
           .truncatedTo(ChronoUnit.DAYS);
            Instant instant2 = date.toInstant()
          .truncatedTo(ChronoUnit.DAYS);
 
             if(instant1.equals(instant2)){
+                
                 listaR.add(l);
             }
-        }
-        
-     return listaR;
- 
+         }
+    }
+     
+        return listaR;
+    
+    
     }
     
     public List<Tarea> findAllThisWeek(){
-     List<Tarea> lista = this.findAllFiltrado();
-     List<Tarea> listaR = new ArrayList<Tarea>();
-      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-      Date date = new Date();  
-      for(Tarea l:lista){
-          Calendar calendar1 = Calendar.getInstance();
+
+     List<Tarea> lista = this.findAll();
+    List<Tarea> listaR = new ArrayList<Tarea>();   
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, 0);
+    calendar.set(Calendar.MINUTE, 0);
+    calendar.set(Calendar.SECOND, 0);
+    calendar.set(Calendar.MILLISECOND, 0);
+
+    Date date = calendar.getTime();
+
+    Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+
+     for(Tarea l:lista){
+                  if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
+
+           Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(l.getFechaVencimiento());
              Calendar calendar2 = Calendar.getInstance();
             calendar2.setTime(date);
-   
             if(calendar1.get(Calendar.WEEK_OF_MONTH) == calendar2.get(Calendar.WEEK_OF_MONTH)){
+                if(l.getFechaVencimiento().before(date)){
+                    l.setPasado("1");
+                }else{
+                    l.setPasado("0");
+                }
+                this.edit(l);
                 listaR.add(l);
             }
+          }
         }
-     return listaR;  
+     
+        return listaR;
     }
     
     public void removeTareasUser(Usuario usuario){

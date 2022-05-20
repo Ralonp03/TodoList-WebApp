@@ -10,6 +10,7 @@ import EJB.PrioridadFacadeLocal;
 import EJB.TareaFacadeLocal;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -54,20 +55,34 @@ private List<Prioridad> listaPrioridades;
 private List<Tarea> listaTareas;
 private List<Tarea> tareas;
 private List<Categoria> listaCategorias;
+private SimpleDateFormat formatter;
 
 @PostConstruct
 public void init(){
-listaTareas = this.tareaEJB.findAllImportancia();
+listaTareas = this.tareaEJB.findAllImportancia(); 
 listaPrioridades = this.prioridadEJB.findAll();
 prioridad = new Prioridad();
 listaCategorias = categoriaEJB.findAll();
+formatter  = new SimpleDateFormat("dd/MM/yyyy");  
 
  }
 
     public void onRowEdit(RowEditEvent<Tarea> event) {
         Tarea tt = event.getObject();
+        Prioridad lol = new Prioridad();
+        for(Prioridad p:listaPrioridades){
+            if(p.getIdPrioridad() == tt.getIdPrioridad().getIdPrioridad()){
+                lol.setColor(p.getColor());
+                lol.setIdPrioridad(p.getIdPrioridad());
+                lol.setNombre(p.getNombre());
+                
+            }
+        }
+        
+        tt.setIdPrioridad(lol);
         tareaEJB.edit(tt);
-        this.listaTareas = this.tareaEJB.findAllImportancia();
+        System.out.println("hola"+tt.isImportancia());
+        this.listaTareas = tareaEJB.findAllImportancia();
         FacesMessage msg = new FacesMessage("Tarea actualizada","");
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -81,18 +96,24 @@ listaCategorias = categoriaEJB.findAll();
         try{
             
            this.tareaEJB.remove(tat);
-           this.listaTareas = this.tareaEJB.findAllImportancia();
+           this.listaTareas = tareaEJB.findAllImportancia();
             
         }catch(Exception e){
             System.out.println("tareasController: "+e.getMessage());
         }   
 
     }
+    
+    public String al(Date date){
+        
+        return formatter.format(date);
+    }
     public void crearTarea(){
         
         try{
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-        Date date = new Date();  
+        Calendar calendar = Calendar.getInstance();
+   
+        Date date = new Date();
 
         Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario"); 
         if(tar.getFechaVencimiento() == null){
@@ -114,7 +135,7 @@ listaCategorias = categoriaEJB.findAll();
             }
         }    
         }
-       
+        
         tar.setIdPrioridad(prioridad);
         
         
@@ -129,6 +150,8 @@ listaCategorias = categoriaEJB.findAll();
         }
         tar.setIdCategoria(cat);
         tar.setIdPersona(us.getIdPersona());
+        tar.setPasado("0");
+        System.out.println(tar.getFechaVencimiento().toString()+tar.getContenido());
         tareaEJB.create(tar);
         //TODO
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tarea registrada", us.getIdPersona().getNombre()));
@@ -189,6 +212,14 @@ listaCategorias = categoriaEJB.findAll();
 
     public void setListaPrioridades(List<Prioridad> listaPrioridades) {
         this.listaPrioridades = listaPrioridades;
+    }
+
+    public SimpleDateFormat getFormatter() {
+        return formatter;
+    }
+
+    public void setFormatter(SimpleDateFormat formatter) {
+        this.formatter = formatter;
     }
 
 
