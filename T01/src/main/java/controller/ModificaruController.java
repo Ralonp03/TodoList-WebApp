@@ -71,6 +71,8 @@ public class ModificaruController implements Serializable {
             FacesMessage msg = new FacesMessage("Usuario "+usuario.getIdPersona().getNombre()+" eliminado con exito.","");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             String str =  FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/index.xhtml");
         }catch(Exception e){
             System.out.println("Modificaucontroller"+e.getMessage());
