@@ -18,7 +18,12 @@
     font-weight: 900;
     color: red !important;
 }
-
+.iso{
+   width: 80px;
+   height: 80px;
+display: block;
+  margin-left: auto;
+  margin-right: auto;}
 .green{
   border: 3px solid #175D3F !important;
   padding: 5px !important;

@@ -53,6 +53,9 @@ public class IndexController implements Serializable{
             }else if(user.getIdRol().getIdRol() == 2){
             FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/tareas.xhtml");    
             // FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuario/inicio.xhtml");    
+            }else if(user.getIdRol().getIdRol() == 3){
+                            FacesContext.getCurrentInstance().getExternalContext().redirect(str+"/faces/privado/usuarioPro/tareasP.xhtml");    
+
             }
         } catch (IOException ex) {
             System.out.println("[IndexController]: "+ex.getMessage());

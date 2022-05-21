@@ -68,7 +68,7 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     }
     
     public List<Tarea> findAllImportancia(){
-        List<Tarea> lista = this.findAll();
+    List<Tarea> lista = this.findAll();
     List<Tarea> listaR = new ArrayList<Tarea>();   
     Calendar calendar = Calendar.getInstance();
     calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -102,10 +102,7 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     List<Tarea> lista = this.findAll();
     List<Tarea> listaR = new ArrayList<Tarea>();   
     Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.HOUR_OF_DAY, 0);
-    calendar.set(Calendar.MINUTE, 0);
-    calendar.set(Calendar.SECOND, 0);
-    calendar.set(Calendar.MILLISECOND, 0);
+
 
     Date date = calendar.getTime();
 
@@ -114,12 +111,12 @@ public class TareaFacade extends AbstractFacade<Tarea> implements TareaFacadeLoc
     for(Tarea l:lista){
          if(l.getIdPersona().getIdPersona() == user.getIdPersona().getIdPersona()){
 
-          Instant instant1 = l.getFechaVencimiento().toInstant()
-          .truncatedTo(ChronoUnit.DAYS);
-           Instant instant2 = date.toInstant()
-         .truncatedTo(ChronoUnit.DAYS);
+         Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(l.getFechaVencimiento());
+             Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(date);
 
-            if(instant1.equals(instant2)){
+            if(calendar1.get(Calendar.DAY_OF_YEAR) == calendar2.get(Calendar.DAY_OF_YEAR)){
                 
                 listaR.add(l);
             }

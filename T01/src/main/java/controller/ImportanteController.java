@@ -143,7 +143,7 @@ formatter  = new SimpleDateFormat("dd/MM/yyyy");
        Categoria cat = new Categoria();
         for(Categoria c : listaCategorias){
             if(c.getIdCategoria() == 1){
-                    cat.setEstado(c.isEstado());
+                    cat.setEstado(c.getEstado());
                     cat.setIdCategoria(c.getIdCategoria());
                     cat.setNombre(c.getNombre());
             }

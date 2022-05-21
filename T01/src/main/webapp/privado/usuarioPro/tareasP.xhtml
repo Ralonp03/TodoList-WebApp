@@ -27,7 +27,7 @@
                 <h:outputStylesheet library="css" name="tareas.css" />
 
                 <div class="card" id="aaaa"> 
-                <p style="font-size:40px;text-align: center;" >IMPORTANTE</p>
+                <p style="font-size:40px;text-align: center;" >TAREAS</p>
                   <hr style="margin-bottom:10px"></hr>
                     <h:form >        
                         <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" >
@@ -41,18 +41,21 @@
                             <div class="p-col-12 p-md-4">
                                 <div style="margin-left: 12px;" class="ui-inputgroup">
                                     <div class="ui-inputgroup-addon"><i class="pi pi-book"></i></div>
-                                    <p:inputText placeholder="Descripcion de la tarea..." style=" width: 33rem" id="content" value="#{importanteController.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
+                                    <p:inputText placeholder="Descripcion de la tarea..." style=" width: 33rem" id="content" value="#{tareasProController.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
                                 </div>
                             </div>
                             <div>
-                                <p:selectOneMenu   style="margin: 10px;" id="prioridad" value="#{importanteController.prioridad.idPrioridad}" >
-                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                <p:selectOneMenu   style="margin: 10px;" id="prioridad" value="#{tareasProController.prioridad.idPrioridad}" >
+                                    <f:selectItems value="#{tareasProController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                </p:selectOneMenu>
+                                <p:selectOneMenu   style="margin: 10px;" id="categoria" value="#{tareasProController.categoria.idCategoria}" >
+                                    <f:selectItems value="#{tareasProController.listaCategorias}" var="p" itemValue="#{p.idCategoria}" itemLabel="#{p.nombre}"  />
                                 </p:selectOneMenu>
                                 <p:selectBooleanButton  
-                                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{importanteController.tar.importancia}"/>
-                                <p:datePicker style="margin: 10px;" id="basic" value="#{importanteController.tar.fechaVencimiento}" placeholder="Fecha finalización"/>
+                                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{tareasProController.tar.importancia}"/>
+                                <p:datePicker style="margin: 10px;" id="basic" value="#{tareasProController.tar.fechaVencimiento}" placeholder="Fecha finalización"/>
 
-                                <p:commandButton value="Añadir tarea" update="growl" action="#{importanteController.crearTarea()}"
+                                <p:commandButton value="Añadir tarea" update="growl" action="#{tareasProController.crearTarea()}"
                                                  oncomplete="handleLoginRequest(xhr, status, args)" />
                             </div>
                         </p:dialog>    
@@ -62,10 +65,10 @@
                     <h:form id="form">
                         <p:growl id="msgs" life="1500"/>
 
-                        <p:dataTable   widgetVar="customersTable" id="basicDT" var="t" value="#{importanteController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" 
+                        <p:dataTable   widgetVar="customersTable" id="basicDT" var="t" value="#{tareasProController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" 
                                      >
-                            <p:ajax event="rowEdit" listener="#{importanteController.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{importanteController.onRowCancel}" update=":form:msgs" />
+                            <p:ajax event="rowEdit" listener="#{tareasProController.onRowEdit}" update=":form:msgs"/>
+                            <p:ajax event="rowEditCancel" listener="#{tareasProController.onRowCancel}" update=":form:msgs" />
 
                             <p:effect type="blind" event="update">
                                 <f:param name="direction" value="'horizontal'"/>
@@ -75,7 +78,7 @@
                             <p:column style="width:4rem;text-align: center" headerText="Busqueda: ">
 
                                 <p:commandButton  
-                                    icon="pi pi-spin pi-spinner"  class="susm" title="Tarea completada" actionListener="#{importanteController.eliminarTarea(t)}" update=":form">
+                                    icon="pi pi-spin pi-spinner"  class="susm" title="Tarea completada" actionListener="#{tareasProController.eliminarTarea(t)}" update=":form">
 
                                 </p:commandButton>
                             </p:column>
@@ -89,6 +92,10 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
+                            <p:column sortBy="#{t.idCategoria.nombre}" headerText="Categoria" style="text-align: center;width: 10rem;margin-left: 0px;">
+                                <img class="iso" src="#{resource[t.idCategoria.estado]}" alt=""/>
+
+                            </p:column>
                             <p:column style="width: 10rem;text-align: center;" headerText="Prioridad" sortBy="#{t.idPrioridad.nombre}">
                                 <div class="#{t.idPrioridad.color}">
                                 <p:cellEditor>
@@ -97,7 +104,7 @@
                                     </f:facet>
                                     <f:facet name="input">
                                         <p:selectOneMenu  style="margin: 10px;"  value="#{t.idPrioridad.idPrioridad}" >
-                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                    <f:selectItems value="#{tareasProController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
                                 </p:selectOneMenu>                               
                                     </f:facet>
                                 </p:cellEditor>
@@ -105,7 +112,7 @@
                             </p:column>
                             <p:column class="hora#{t.pasado}" style="width: 12rem;margin: 40px;" headerText="Fecha vencimiento" sortBy="#{t.fechaVencimiento}">
 
-                                <h:outputText  value="#{importanteController.al(t.fechaVencimiento)}" >
+                                <h:outputText  value="#{tareasProController.al(t.fechaVencimiento)}" >
                                     
                             </h:outputText>                                   
                             </p:column>

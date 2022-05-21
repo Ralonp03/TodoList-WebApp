@@ -33,7 +33,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named
 @RequestScoped
-public class MidiaController implements Serializable{
+public class ImportanteControllerP implements Serializable{
 
 
     
@@ -50,6 +50,7 @@ private CategoriaFacadeLocal categoriaEJB;
 private Tarea tar;
 
 private Prioridad prioridad;
+private Categoria categoria;
 private List<Prioridad> listaPrioridades;
 
 private List<Tarea> listaTareas;
@@ -59,9 +60,10 @@ private SimpleDateFormat formatter;
 
 @PostConstruct
 public void init(){
-listaTareas = this.tareaEJB.findAllToday(); 
+listaTareas = this.tareaEJB.findAllImportancia();
 listaPrioridades = this.prioridadEJB.findAll();
 prioridad = new Prioridad();
+categoria = new Categoria();
 listaCategorias = categoriaEJB.findAll();
 formatter  = new SimpleDateFormat("dd/MM/yyyy");  
 
@@ -82,7 +84,7 @@ formatter  = new SimpleDateFormat("dd/MM/yyyy");
         tt.setIdPrioridad(lol);
         tareaEJB.edit(tt);
         System.out.println("hola"+tt.isImportancia());
-        this.listaTareas = tareaEJB.findAllToday();
+        this.listaTareas = tareaEJB.findAllImportancia();
         FacesMessage msg = new FacesMessage("Tarea actualizada","");
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
@@ -96,7 +98,7 @@ formatter  = new SimpleDateFormat("dd/MM/yyyy");
         try{
             
            this.tareaEJB.remove(tat);
-           this.listaTareas = tareaEJB.findAllToday();
+           this.listaTareas = tareaEJB.findAllImportancia();
             
         }catch(Exception e){
             System.out.println("tareasController: "+e.getMessage());
@@ -138,17 +140,25 @@ formatter  = new SimpleDateFormat("dd/MM/yyyy");
         
         tar.setIdPrioridad(prioridad);
         
-        
-        //TODO
-       Categoria cat = new Categoria();
+        if(categoria.getIdCategoria() != 0){
         for(Categoria c : listaCategorias){
-            if(c.getIdCategoria() == 1){
-                    cat.setEstado(c.getEstado());
-                    cat.setIdCategoria(c.getIdCategoria());
-                    cat.setNombre(c.getNombre());
+            if(c.getIdCategoria() == categoria.getIdCategoria()){
+                categoria.setEstado(c.getEstado());
+                categoria.setIdCategoria(c.getIdCategoria());
+                categoria.setNombre(c.getNombre());
             }
         }
-        tar.setIdCategoria(cat);
+        }else{
+          for(Categoria c : listaCategorias){
+            if(c.getIdCategoria() == 1){
+                    categoria.setEstado(c.getEstado());
+                    categoria.setIdCategoria(c.getIdCategoria());
+                    categoria.setNombre(c.getNombre());
+            }
+        }
+        }
+      
+        tar.setIdCategoria(categoria);
         tar.setIdPersona(us.getIdPersona());
         tar.setPasado("0");
         System.out.println(tar.getFechaVencimiento().toString()+tar.getContenido());
@@ -220,6 +230,22 @@ formatter  = new SimpleDateFormat("dd/MM/yyyy");
 
     public void setFormatter(SimpleDateFormat formatter) {
         this.formatter = formatter;
+    }
+
+    public List<Categoria> getListaCategorias() {
+        return listaCategorias;
+    }
+
+    public void setListaCategorias(List<Categoria> listaCategorias) {
+        this.listaCategorias = listaCategorias;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
 

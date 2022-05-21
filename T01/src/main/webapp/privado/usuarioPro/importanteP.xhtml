@@ -41,18 +41,22 @@
                             <div class="p-col-12 p-md-4">
                                 <div style="margin-left: 12px;" class="ui-inputgroup">
                                     <div class="ui-inputgroup-addon"><i class="pi pi-book"></i></div>
-                                    <p:inputText placeholder="Descripcion de la tarea..." style=" width: 33rem" id="content" value="#{importanteController.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
+                                    <p:inputText placeholder="Descripcion de la tarea..." style=" width: 33rem" id="content" value="#{importanteControllerP.tar.contenido}" required="true" label="content" requiredMessage="La tarea tiene que tener una descripcion"/>
                                 </div>
                             </div>
                             <div>
-                                <p:selectOneMenu   style="margin: 10px;" id="prioridad" value="#{importanteController.prioridad.idPrioridad}" >
-                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                
+                                <p:selectOneMenu   style="margin: 10px;" id="prioridad" value="#{importanteControllerP.prioridad.idPrioridad}" >
+                                    <f:selectItems value="#{importanteControllerP.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
+                                </p:selectOneMenu>
+                                 <p:selectOneMenu   style="margin: 10px;" id="categoria" value="#{importanteControllerP.categoria.idCategoria}" >
+                                    <f:selectItems value="#{importanteControllerP.listaCategorias}" var="p" itemValue="#{p.idCategoria}" itemLabel="#{p.nombre}"  />
                                 </p:selectOneMenu>
                                 <p:selectBooleanButton  
-                                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{importanteController.tar.importancia}"/>
-                                <p:datePicker style="margin: 10px;" id="basic" value="#{importanteController.tar.fechaVencimiento}" placeholder="Fecha finalización"/>
+                                    onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{importanteControllerP.tar.importancia}"/>
+                                <p:datePicker style="margin: 10px;" id="basic" value="#{importanteControllerP.tar.fechaVencimiento}" placeholder="Fecha finalización"/>
 
-                                <p:commandButton value="Añadir tarea" update="growl" action="#{importanteController.crearTarea()}"
+                                <p:commandButton value="Añadir tarea" update="growl" action="#{importanteControllerP.crearTarea()}"
                                                  oncomplete="handleLoginRequest(xhr, status, args)" />
                             </div>
                         </p:dialog>    
@@ -62,10 +66,9 @@
                     <h:form id="form">
                         <p:growl id="msgs" life="1500"/>
 
-                        <p:dataTable   widgetVar="customersTable" id="basicDT" var="t" value="#{importanteController.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" 
+                        <p:dataTable   widgetVar="customersTable" id="basicDT" var="t" value="#{importanteControllerP.listaTareas}" emptyMessage="Introduce tus tareas." editable="true" 
                                      >
-                            <p:ajax event="rowEdit" listener="#{importanteController.onRowEdit}" update=":form:msgs"/>
-                            <p:ajax event="rowEditCancel" listener="#{importanteController.onRowCancel}" update=":form:msgs" />
+                           
 
                             <p:effect type="blind" event="update">
                                 <f:param name="direction" value="'horizontal'"/>
@@ -75,7 +78,7 @@
                             <p:column style="width:4rem;text-align: center" headerText="Busqueda: ">
 
                                 <p:commandButton  
-                                    icon="pi pi-spin pi-spinner"  class="susm" title="Tarea completada" actionListener="#{importanteController.eliminarTarea(t)}" update=":form">
+                                    icon="pi pi-spin pi-spinner"  class="susm" title="Tarea completada" actionListener="#{importanteControllerP.eliminarTarea(t)}" update=":form">
 
                                 </p:commandButton>
                             </p:column>
@@ -89,37 +92,17 @@
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column style="width: 10rem;text-align: center;" headerText="Prioridad" sortBy="#{t.idPrioridad.nombre}">
-                                <div class="#{t.idPrioridad.color}">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText  value="#{t.idPrioridad.nombre}" />
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:selectOneMenu  style="margin: 10px;"  value="#{t.idPrioridad.idPrioridad}" >
-                                    <f:selectItems value="#{importanteController.listaPrioridades}" var="p" itemValue="#{p.idPrioridad}" itemLabel="#{p.nombre}" />
-                                </p:selectOneMenu>                               
-                                    </f:facet>
-                                </p:cellEditor>
-                                    </div>
-                            </p:column>
-                            <p:column class="hora#{t.pasado}" style="width: 12rem;margin: 40px;" headerText="Fecha vencimiento" sortBy="#{t.fechaVencimiento}">
 
-                                <h:outputText  value="#{importanteController.al(t.fechaVencimiento)}" >
+                           
+                            
+                            <p:column class="hora#{t.pasado}" style="width: 12rem;margin: 40px;text-align: center;" headerText="Fecha vencimiento" sortBy="#{t.fechaVencimiento}">
+
+                                <h:outputText  value="#{importanteControllerP.al(t.fechaVencimiento)}" >
                                     
                             </h:outputText>                                   
                             </p:column>
+
                             
-                            <p:column style="width: 5rem;margin: 40px;text-align: center;" headerText="Importancia" sortBy="#{t.importancia}">
-
-                                  <p:selectBooleanButton  
-                                      onIcon="pi pi-heart-fill" offIcon="pi pi-heart" style="width:3rem;margin: 10px;"  value="#{t.importancia}" disabled="true"/>                               
-                            </p:column>
-
-                            <p:column style="width: 5rem;text-align: right" headerText="Modificar">
-                                
-                                <p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit" saveTitle="Save Row" styleClass="ui-button-warning" />
-                            </p:column>
 
 
                         </p:dataTable>

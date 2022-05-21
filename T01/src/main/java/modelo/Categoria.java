@@ -33,7 +33,7 @@ public class Categoria {
     
     //estadoCategoria
     @Column(name="Estado")
-    private boolean estado;
+    private String estado;
 
     public int getIdCategoria() {
         return idCategoria;
@@ -51,13 +51,15 @@ public class Categoria {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    
     
     
     
